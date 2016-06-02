@@ -29,7 +29,7 @@ var index = 0;
 var max;
 
 // ON UPDATE
-document.body.onclick = function() {
+updateImage = function() {
   var imageObj = new Image();
   imageObj.onload = function() {
     context.drawImage(imageObj, 0, 0, context.canvas.width, context.canvas.height);
@@ -42,6 +42,8 @@ document.body.onclick = function() {
   else {
     console.log("done");
   }
+
+  localStorage.setItem("lastIndex", index);
 }
 
 // POPULATE IMAGERY
@@ -70,10 +72,18 @@ populate = function(item) {
 }
 
 // MARK THE START OF THE PROCESS
-markStart = function() {
+startProcess = function() {
+  if(state === "live")
+    setInterval(updateImage, 2913000); // one image about every 40-odd minutes
+  else if(state === "test")
+    setInterval(updateImage, 1000);
 
+  if(!localStorage.getItem("lastIndex"))
+    index = 0;
+  else
+    index = localStorage.getItem("lastIndex");
 }
 
 // go.
 this.populateScreens();
-this.markStart();
+this.startProcess();
