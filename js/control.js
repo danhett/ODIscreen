@@ -27,6 +27,7 @@ var sheffield3 = {prefix:"sheffield/grabs3/screen2+", count:1463};
 var screens = []
 var index = 0;
 var max;
+var liveInterval = 2913000;
 
 // ON UPDATE
 updateImage = function() {
@@ -43,7 +44,7 @@ updateImage = function() {
     console.log("done");
   }
 
-  localStorage.setItem("lastIndex", index);
+  localStorage.setItem(state + "-lastIndex", index);
 }
 
 // POPULATE IMAGERY
@@ -74,14 +75,14 @@ populate = function(item) {
 // MARK THE START OF THE PROCESS
 startProcess = function() {
   if(state === "live")
-    setInterval(updateImage, 2913000); // one image about every 40-odd minutes
+    setInterval(updateImage, liveInterval); // one image about every 40-odd minutes
   else if(state === "test")
     setInterval(updateImage, 1000);
 
-  if(!localStorage.getItem("lastIndex"))
+  if(!localStorage.getItem(state + "-lastIndex"))
     index = 0;
   else
-    index = localStorage.getItem("lastIndex");
+    index = localStorage.getItem(state + "-lastIndex");
 }
 
 // go.
